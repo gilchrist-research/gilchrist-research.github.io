@@ -5,7 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Gilchrist Research is an elite security research lab. We build advanced agentic security systems that continuously discover, validate, and remediate vulnerabilities before they can be exploited.">
     <title>Gilchrist Research | Preemptive Intelligence. Autonomous Security.</title>
-    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='%230E3829' stroke-width='2' stroke-linejoin='round'%3E%3Cpath d='M12 2L2 7L12 12L22 7L12 2Z'/%3E%3Cpath d='M2 17L12 22L22 17'/%3E%3Cpath d='M2 12L12 17L22 12'/%3E%3C/svg%3E">
+
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Gilchrist Research | Preemptive Intelligence. Autonomous Security.">
+    <meta property="og:description" content="Elite security research lab building advanced agentic systems that discover, validate, and remediate vulnerabilities before exploitation.">
+    <meta property="og:url" content="https://gilchrist-research.github.io/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Gilchrist Research">
+    <meta name="twitter:description" content="Preemptive Intelligence. Autonomous Security.">
+    <meta name="theme-color" content="#0E3829">
+
     <!-- Google Fonts: Lora (Editorial Serif), Plus Jakarta Sans (UI Sans), JetBrains Mono (Technical Monospace) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,13 +61,9 @@
 
         <!-- Hero Section -->
         <section class="hero-section" id="hero">
-            <div class="hero-bg-lines">
-                <div class="bg-line"></div>
-                <div class="bg-line"></div>
-                <div class="bg-line"></div>
-            </div>
+            <div class="hero-bg-lines"></div>
             <div class="container hero-container">
-                <div class="hero-content">
+                <div class="hero-content reveal">
                     <div class="badge-container">
                         <span class="hero-badge"><span class="badge-dot"></span>Autonomous Security Lab</span>
                     </div>
@@ -78,18 +86,18 @@
         <!-- Stats Section -->
         <section class="stats-section" id="telemetry">
             <div class="container">
-                <div class="stats-grid">
-                    <div class="stat-card" id="stat-contracts">
+                <div class="stats-grid reveal-stagger">
+                    <div class="stat-card reveal" id="stat-contracts">
                         <span class="stat-label">Monitored Contracts</span>
                         <h2 class="stat-value" id="val-contracts">14,280</h2>
                         <p class="stat-desc">Continuous repository auditing</p>
                     </div>
-                    <div class="stat-card" id="stat-assets">
+                    <div class="stat-card reveal" id="stat-assets">
                         <span class="stat-label">Secured Value</span>
                         <h2 class="stat-value" id="val-assets">$1.84B</h2>
                         <p class="stat-desc">Total Value Locked protected</p>
                     </div>
-                    <div class="stat-card" id="stat-vulnerabilities">
+                    <div class="stat-card reveal" id="stat-vulnerabilities">
                         <span class="stat-label">Preempted Threats</span>
                         <h2 class="stat-value" id="val-vulnerabilities">342</h2>
                         <p class="stat-desc">Autonomous exploit blocks</p>
@@ -101,14 +109,14 @@
         <!-- Capabilities Section -->
         <section class="capabilities-section" id="capabilities">
             <div class="container">
-                <div class="section-header">
+                <div class="section-header reveal">
                     <span class="section-subtitle">Core Tooling</span>
                     <h2 class="section-title">Autonomous Security Operations</h2>
                     <p class="section-desc">Our software agents operate 24/7 inside repository pipelines, combining static reasoning with dynamic fuzzing to eliminate security drift.</p>
                 </div>
                 
-                <div class="capabilities-grid">
-                    <div class="capability-card" id="cap-fuzzing">
+                <div class="capabilities-grid reveal-stagger">
+                    <div class="capability-card reveal" id="cap-fuzzing">
                         <div class="card-icon-container">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="card-icon">
                                 <circle cx="12" cy="12" r="10"></circle>
@@ -119,7 +127,7 @@
                         <p class="card-body">High-frequency mutation-based fuzzers generate and run millions of input paths, stress-testing complex states and invariant boundaries.</p>
                     </div>
                     
-                    <div class="capability-card" id="cap-synthesis">
+                    <div class="capability-card reveal" id="cap-synthesis">
                         <div class="card-icon-container">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="card-icon">
                                 <polyline points="16 18 22 12 16 6"></polyline>
@@ -131,7 +139,7 @@
                         <p class="card-body">Upon detecting a suspicious path, agents automatically synthesize executable Proof of Concept exploits to confirm the threat and remove false positives.</p>
                     </div>
                     
-                    <div class="capability-card" id="cap-patching">
+                    <div class="capability-card reveal" id="cap-patching">
                         <div class="card-icon-container">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="card-icon">
                                 <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
@@ -142,7 +150,7 @@
                         <p class="card-body">The system constructs context-aware fixes, runs regression suites locally, and packages clean pull requests for team approval within minutes.</p>
                     </div>
                     
-                    <div class="capability-card" id="cap-analysis">
+                    <div class="capability-card reveal" id="cap-analysis">
                         <div class="card-icon-container">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="card-icon">
                                 <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
@@ -160,13 +168,13 @@
         <!-- Advisory Center Section -->
         <section class="advisories-section" id="advisories">
             <div class="container">
-                <div class="section-header">
+                <div class="section-header reveal">
                     <span class="section-subtitle">Vulnerability Disclosures</span>
                     <h2 class="section-title">Security Advisory Center</h2>
                     <p class="section-desc">Technical reports and fixes verified by our autonomous platform. Select an advisory to view the patch detail.</p>
                 </div>
                 
-                <div class="advisories-container">
+                <div class="advisories-container reveal">
                     <!-- Navigation panel for advisories -->
                     <div class="advisories-list" id="advisories-nav">
                         <button class="advisory-row active" data-id="g-2026-081" id="adv-row-81">
@@ -246,7 +254,7 @@
         <!-- Contact Section -->
         <section class="contact-section" id="contact">
             <div class="container">
-                <div class="contact-grid">
+                <div class="contact-grid reveal">
                     <div class="contact-info">
                         <span class="section-subtitle">Get in Touch</span>
                         <h2 class="section-title">Schedule a Research Audit</h2>

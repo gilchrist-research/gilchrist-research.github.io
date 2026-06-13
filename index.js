@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Gilchrist Research - Interactive Logic
+   Gilchrist Research - Interactive Logic (Premium Edition)
    ========================================================================== */
 
 // Mock Database for Security Advisories
@@ -56,15 +56,75 @@ let securedValueAmount = 1843291048; // $1.84B representation
 let preemptedThreatsCount = 342;
 
 document.addEventListener("DOMContentLoaded", () => {
+    initScrollReveal();
+    initActiveNavTracking();
     initAdvisories();
     initTelemetry();
     initContactForm();
     initSmoothScroll();
 });
 
-/**
- * Initialize Interactive Advisory Selector
- */
+/* ==========================================================================
+   Scroll-Reveal (IntersectionObserver)
+   Elements with class .reveal fade+slide in when they enter the viewport.
+   Elements inside .reveal-stagger get a cascading delay.
+   ========================================================================== */
+function initScrollReveal() {
+    const revealElements = document.querySelectorAll(".reveal");
+
+    // Check prefers-reduced-motion
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) {
+        revealElements.forEach(el => el.classList.add("revealed"));
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("revealed");
+                observer.unobserve(entry.target); // Only animate once
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: "0px 0px -60px 0px"
+    });
+
+    revealElements.forEach(el => observer.observe(el));
+}
+
+/* ==========================================================================
+   Active Nav Link Tracking (IntersectionObserver)
+   Highlights the nav link corresponding to the currently visible section.
+   ========================================================================== */
+function initActiveNavTracking() {
+    const sections = document.querySelectorAll("section[id]");
+    const navLinks = document.querySelectorAll(".nav-link");
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.getAttribute("id");
+                navLinks.forEach(link => {
+                    link.classList.remove("active");
+                    if (link.getAttribute("href") === `#${id}`) {
+                        link.classList.add("active");
+                    }
+                });
+            }
+        });
+    }, {
+        threshold: 0.3,
+        rootMargin: "-80px 0px -40% 0px"
+    });
+
+    sections.forEach(section => observer.observe(section));
+}
+
+/* ==========================================================================
+   Interactive Advisory Selector
+   ========================================================================== */
 function initAdvisories() {
     const navButtons = document.querySelectorAll(".advisory-row");
     
@@ -88,24 +148,64 @@ function initAdvisories() {
             navButtons.forEach(btn => btn.classList.remove("active"));
             button.classList.add("active");
             
-            // Update details
-            detailId.textContent = data.id;
-            detailCategory.textContent = data.category;
-            detailTitle.textContent = data.title;
-            detailDesc.textContent = data.description;
-            diffFile.textContent = data.file;
-            diffCode.innerHTML = data.code;
-            
-            // Handle severity badge class updates
-            detailSeverity.textContent = data.severity;
-            detailSeverity.className = `adv-badge ${data.severityClass}`;
+            // Update details with a brief fade
+            const detailCard = document.getElementById("advisory-details");
+            detailCard.style.opacity = "0";
+            detailCard.style.transform = "translateY(8px)";
+
+            setTimeout(() => {
+                detailId.textContent = data.id;
+                detailCategory.textContent = data.category;
+                detailTitle.textContent = data.title;
+                detailDesc.textContent = data.description;
+                diffFile.textContent = data.file;
+                diffCode.innerHTML = data.code;
+                
+                // Handle severity badge class updates
+                detailSeverity.textContent = data.severity;
+                detailSeverity.className = `adv-badge ${data.severityClass}`;
+
+                detailCard.style.opacity = "1";
+                detailCard.style.transform = "translateY(0)";
+            }, 200);
         });
     });
+
+    // Add transition to the detail card
+    const detailCard = document.getElementById("advisory-details");
+    if (detailCard) {
+        detailCard.style.transition = "opacity 0.3s ease, transform 0.3s ease";
+    }
 }
 
-/**
- * Initialize Real-time Telemetry Updates
- */
+/* ==========================================================================
+   Smooth Count-Up Animation (with ease-out)
+   Numbers animate from 0 to their target when the stats section enters view.
+   ========================================================================== */
+function animateCountUp(element, target, prefix, suffix, duration) {
+    const startTime = performance.now();
+
+    function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        // Ease-out cubic for a decelerating feel
+        const easedProgress = 1 - Math.pow(1 - progress, 3);
+        const currentValue = Math.floor(easedProgress * target);
+
+        element.textContent = `${prefix}${currentValue.toLocaleString()}${suffix}`;
+
+        if (progress < 1) {
+            requestAnimationFrame(update);
+        }
+    }
+
+    requestAnimationFrame(update);
+}
+
+/* ==========================================================================
+   Real-time Telemetry Updates (with initial count-up)
+   ========================================================================== */
 function initTelemetry() {
     const contractsEl = document.getElementById("val-contracts");
     const assetsEl = document.getElementById("val-assets");
@@ -113,6 +213,33 @@ function initTelemetry() {
     
     if (!contractsEl || !assetsEl || !vulnerabilitiesEl) return;
     
+    let hasAnimated = false;
+
+    // Trigger count-up when the stats section enters viewport
+    const statsSection = document.getElementById("telemetry");
+    if (statsSection) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !hasAnimated) {
+                    hasAnimated = true;
+                    animateCountUp(contractsEl, monitoredContractsCount, "", "", 2000);
+                    animateCountUp(assetsEl, 184, "$", "B", 1800);
+                    animateCountUp(vulnerabilitiesEl, preemptedThreatsCount, "", "", 1600);
+                    observer.unobserve(entry.target);
+
+                    // Start live increments after initial animation
+                    setTimeout(() => {
+                        startLiveIncrements(contractsEl, assetsEl, vulnerabilitiesEl);
+                    }, 2500);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        observer.observe(statsSection);
+    }
+}
+
+function startLiveIncrements(contractsEl, assetsEl, vulnerabilitiesEl) {
     // Increment Monitored Contracts
     setInterval(() => {
         if (Math.random() > 0.4) {
@@ -123,17 +250,15 @@ function initTelemetry() {
     
     // Increment Secured Assets ($ value)
     setInterval(() => {
-        const increment = Math.floor(Math.random() * 28000) + 12000; // $12k to $40k
+        const increment = Math.floor(Math.random() * 28000) + 12000;
         securedValueAmount += increment;
-        
-        // Convert to human-readable format ($1.84B style with precise details)
         const billions = (securedValueAmount / 1000000000).toFixed(6);
         assetsEl.textContent = `$${billions.substring(0, 4)}B`;
     }, 3000);
     
     // Increment Preempted Threats
     setInterval(() => {
-        if (Math.random() > 0.92) { // Rare event
+        if (Math.random() > 0.92) {
             preemptedThreatsCount += 1;
             vulnerabilitiesEl.textContent = preemptedThreatsCount.toString();
             triggerPulseAlert();
@@ -158,9 +283,9 @@ function triggerPulseAlert() {
     }, 1000);
 }
 
-/**
- * Initialize Contact Form Submission & Feedback
- */
+/* ==========================================================================
+   Contact Form Submission & Feedback
+   ========================================================================== */
 function initContactForm() {
     const form = document.getElementById("audit-form");
     const feedback = document.getElementById("form-feedback-message");
@@ -200,9 +325,9 @@ function initContactForm() {
     });
 }
 
-/**
- * Initialize Smooth Scrolling
- */
+/* ==========================================================================
+   Smooth Scrolling (with nav offset)
+   ========================================================================== */
 function initSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
