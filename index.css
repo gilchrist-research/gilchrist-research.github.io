@@ -924,24 +924,96 @@ section {
 }
 
 /* ==========================================================================
-   Footer Section
+   Trust Signals (Logo Bar)
+   ========================================================================== */
+.trust-section {
+    padding: 40px 0;
+    border-top: var(--border-light);
+    background-color: var(--color-canvas);
+}
+
+.trust-label {
+    text-align: center;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-text-muted);
+    margin-bottom: 24px;
+}
+
+.trust-logos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+}
+
+.trust-logo {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+    opacity: 0.5;
+    letter-spacing: 0.02em;
+    transition: opacity 0.3s ease;
+}
+
+.trust-logo:hover {
+    opacity: 0.8;
+}
+
+.trust-logo-divider {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================================================
+   Section Gradient Divider
+   ========================================================================== */
+.section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(14, 56, 41, 0.1), rgba(197, 168, 128, 0.15), rgba(14, 56, 41, 0.1), transparent);
+    margin: 0;
+}
+
+/* ==========================================================================
+   Card Icon Hover Animation
+   ========================================================================== */
+.card-icon-container {
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.capability-card:hover .card-icon-container {
+    background-color: var(--color-forest);
+    color: var(--color-canvas);
+    transform: scale(1.08);
+    box-shadow: 0 4px 12px rgba(14, 56, 41, 0.15);
+}
+
+/* ==========================================================================
+   Footer Section (Upgraded 4-Column Grid)
    ========================================================================== */
 .footer {
     background-color: var(--color-forest);
     color: rgba(250, 249, 246, 0.75);
-    padding: 48px 0;
+    padding: 64px 0 32px;
     border-top: 1px solid rgba(250, 249, 246, 0.1);
 }
 
-.footer-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
 }
 
 .footer .brand {
     color: var(--color-canvas);
-    margin-bottom: 8px;
+    margin-bottom: 12px;
 }
 
 .footer .logo-icon {
@@ -950,14 +1022,48 @@ section {
 
 .footer-tagline {
     font-size: 0.875rem;
-    opacity: 0.8;
+    opacity: 0.6;
+    line-height: 1.5;
 }
 
-.footer-right {
+.footer-heading {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(250, 249, 246, 0.4);
+    margin-bottom: 16px;
+}
+
+.footer-nav-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-link {
+    font-size: 0.875rem;
+    color: rgba(250, 249, 246, 0.7);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+    color: var(--color-canvas);
+}
+
+.footer-status-col {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    gap: 12px;
+    justify-content: flex-start;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(250, 249, 246, 0.08);
+    padding-top: 24px;
+    text-align: center;
 }
 
 .status-indicator {
@@ -992,7 +1098,7 @@ section {
 
 .copyright {
     font-size: 0.8125rem;
-    opacity: 0.6;
+    opacity: 0.4;
 }
 
 /* ==========================================================================
@@ -1122,14 +1228,22 @@ section {
         gap: 0;
     }
     
-    .footer-container {
-        flex-direction: column;
-        gap: 24px;
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
         text-align: center;
     }
     
-    .footer-right {
+    .footer-status-col {
         align-items: center;
+    }
+    
+    .trust-logos {
+        gap: 20px;
+    }
+    
+    .trust-logo-divider {
+        display: none;
     }
 }
 
